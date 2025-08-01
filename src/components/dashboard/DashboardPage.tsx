@@ -1,0 +1,72 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+import { FormEvent, useEffect, useState } from "react";
+import Header from "./widgets/header/Header";
+import UserGreeting from "./widgets/UserGreeting";
+import TransactionActions from "./widgets/transactionActions/TransactionActions";
+import RecentTransactions from "./widgets/recentTransactions/RecentTransactions";
+import AddTransactionModal from "./widgets/addTransactionModal/AddTransactionModal";
+import HandleInputChange from "@/src/lib/utils/HandleInputChange";
+import ToggleModal from "@/src/lib/utils/ToggleModal";
+
+export interface User {
+  nickName?: string;
+  email?: string;
+}
+
+const DashboardPage = () => {
+  const [user, setUser] = useState<User>({});
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isChecking, setIsChecking] = useState(true); // ✅ 로딩 상태 추가
+
+  const [form, setForm] = useState({ item: "", amount: "", type: "income" });
+  const router = useRouter();
+
+  const logout = () => {
+    localStorage.removeItem("loggedInUser");
+    setUser({});
+    router.push("/login");
+  };
+
+  const handleSubmitTransaction = (e: FormEvent<HTMLFormElement>) => {
+    const transactions = JSON.parse(
+      localStorage.getItem("transactions") || "[]"
+    );
+    transactions.push(form);
+    localStorage.setItem("transactions", JSON.stringify(transactions));
+  };
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("loggedInUser") || "null");
+    if (!user) {
+      router.replace("/login");
+    } else {
+      setUser(user);
+    }
+    setIsChecking(false);
+  }, []);
+
+  if (isChecking) return null;
+
+  return (
+    <main className="min-h-screen bg-gray-50 flex flex-col items-center p-6">
+      <Header onClick={logout}></Header>
+      <UserGreeting user={user}></UserGreeting>
+      <TransactionActions
+        addTransaction={() => ToggleModal(setIsModalOpen)}
+      ></TransactionActions>
+      <RecentTransactions></RecentTransactions>
+      {isModalOpen && (
+        <AddTransactionModal
+          onSubmit={handleSubmitTransaction}
+          onChange={(e) => HandleInputChange(e, setForm)}
+          form={form}
+          cancel={() => ToggleModal(setIsModalOpen)}
+        ></AddTransactionModal>
+      )}
+    </main>
+  );
+};
+
+export default DashboardPage;
