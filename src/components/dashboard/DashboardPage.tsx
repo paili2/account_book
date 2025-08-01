@@ -20,7 +20,12 @@ const DashboardPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isChecking, setIsChecking] = useState(true); // ✅ 로딩 상태 추가
 
-  const [form, setForm] = useState({ item: "", amount: "", type: "income" });
+  const [form, setForm] = useState({
+    item: "",
+    amount: "",
+    type: "income",
+    date: "",
+  });
 
   const router = useRouter();
 
@@ -34,7 +39,7 @@ const DashboardPage = () => {
 
   const handleSubmitTransaction = (e: FormEvent<HTMLFormElement>) => {
     const transactions = JSON.parse(localStorage.getItem(key) || "[]");
-    transactions.push(form);
+    transactions.push({ ...form, date: new Date().toLocaleDateString() });
     localStorage.setItem(key, JSON.stringify(transactions));
   };
 
