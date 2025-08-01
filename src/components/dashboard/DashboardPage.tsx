@@ -21,6 +21,7 @@ const DashboardPage = () => {
   const [isChecking, setIsChecking] = useState(true); // ✅ 로딩 상태 추가
 
   const [form, setForm] = useState({ item: "", amount: "", type: "income" });
+
   const router = useRouter();
 
   const logout = () => {
@@ -29,12 +30,12 @@ const DashboardPage = () => {
     router.push("/login");
   };
 
+  const key = `transactions_${user.email}`;
+
   const handleSubmitTransaction = (e: FormEvent<HTMLFormElement>) => {
-    const transactions = JSON.parse(
-      localStorage.getItem("transactions") || "[]"
-    );
+    const transactions = JSON.parse(localStorage.getItem(key) || "[]");
     transactions.push(form);
-    localStorage.setItem("transactions", JSON.stringify(transactions));
+    localStorage.setItem(key, JSON.stringify(transactions));
   };
 
   useEffect(() => {
