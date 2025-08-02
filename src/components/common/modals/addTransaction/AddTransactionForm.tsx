@@ -1,18 +1,20 @@
-import { Transaction } from "@/src/components/transactions/TransactionsPage";
 import { ChangeEvent, FormEvent } from "react";
-import { TransactionFormProps } from "../addTransactionModal/TransactionForm";
 
-export interface EditTransactionFormProps extends TransactionFormProps {
-  transaction: Transaction;
+export interface TransactionFormProps {
+  onSubmit: (e: FormEvent<HTMLFormElement>) => void;
+  onChange: (
+    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
+  ) => void;
+  form: { item: string; amount: string; type: string };
+  cancel: () => void;
 }
 
-const EditTransactionForm = ({
+const AddTransactionForm = ({
   onSubmit,
   onChange,
   form,
   cancel,
-  transaction,
-}: EditTransactionFormProps) => {
+}: TransactionFormProps) => {
   return (
     <form onSubmit={onSubmit}>
       <input
@@ -20,20 +22,18 @@ const EditTransactionForm = ({
         name="item"
         onChange={onChange}
         placeholder="항목명"
-        value={transaction.item}
         className="w-full border rounded p-2 mb-3"
       />
       <input
         type="number"
         name="amount"
         placeholder="금액"
-        value={transaction.amount}
         onChange={onChange}
         className="w-full border rounded p-2 mb-3"
       />
       <select
         name="type"
-        value={transaction.type}
+        value={form.type}
         onChange={onChange}
         className="w-full border rounded p-2 mb-3"
       >
@@ -58,4 +58,4 @@ const EditTransactionForm = ({
   );
 };
 
-export default EditTransactionForm;
+export default AddTransactionForm;

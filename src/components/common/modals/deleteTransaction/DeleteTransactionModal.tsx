@@ -3,11 +3,13 @@
 import { X } from "lucide-react";
 
 interface DeleteTransactionModalProps {
+  deleteMessage: string; // ✅ 메시지 prop 추가
   deleteClick: () => void;
   cancel: () => void;
 }
 
 const DeleteTransactionModal = ({
+  deleteMessage,
   deleteClick,
   cancel,
 }: DeleteTransactionModalProps) => {
@@ -23,8 +25,9 @@ const DeleteTransactionModal = ({
           </button>
         </div>
         <div className="px-8 py-6">
+          {/* ✅ 여기서 deleteMessage 사용 */}
           <h2 className="text-lg font-medium mb-5 text-center text-gray-800">
-            해당 항목을 삭제하시겠습니까?
+            {deleteMessage || "해당 항목을 삭제하시겠습니까?"}
           </h2>
           <div className="flex justify-center gap-4">
             <button

@@ -1,4 +1,5 @@
 import { ChangeEvent } from "react";
+import { Transaction } from "../TransactionsPage";
 
 interface TableHeaderProps {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;

@@ -1,5 +1,3 @@
-"use client";
-
 const ToggleModal = (
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>
 ) => {

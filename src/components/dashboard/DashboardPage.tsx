@@ -6,7 +6,7 @@ import Header from "../common/widgets/header/Header";
 import UserGreeting from "../common/widgets/UserGreeting";
 import TransactionActions from "../common/widgets/transactionActions/TransactionActions";
 import RecentTransactions from "../common/widgets/recentTransactions/RecentTransactions";
-import AddTransactionModal from "../common/widgets/addTransactionModal/AddTransactionModal";
+import AddTransactionModal from "../common/modals/addTransaction/AddTransactionModal";
 import HandleInputChange from "@/src/lib/utils/HandleInputChange";
 import ToggleModal from "@/src/lib/utils/ToggleModal";
 

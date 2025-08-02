@@ -1,6 +1,6 @@
 import { Transaction } from "@/src/components/transactions/TransactionsPage";
-import EditTransactionForm from "../EditTransactionForm";
-import { TransactionFormProps } from "../../addTransactionModal/TransactionForm";
+import EditTransactionForm from "./EditTransactionForm";
+import { TransactionFormProps } from "../addTransaction/AddTransactionForm";
 
 export interface EditTransactionModalProps extends TransactionFormProps {
   title: string;

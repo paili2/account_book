@@ -1,20 +1,16 @@
-import { ChangeEvent, FormEvent } from "react";
+import { Transaction } from "@/src/components/transactions/TransactionsPage";
+import { TransactionFormProps } from "../addTransaction/AddTransactionForm";
 
-export interface TransactionFormProps {
-  onSubmit: (e: FormEvent<HTMLFormElement>) => void;
-  onChange: (
-    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
-  ) => void;
-  form: { item: string; amount: string; type: string };
-  cancel: () => void;
+export interface EditTransactionFormProps extends TransactionFormProps {
+  transaction: Transaction;
 }
 
-const TransactionForm = ({
+const EditTransactionForm = ({
   onSubmit,
   onChange,
   form,
   cancel,
-}: TransactionFormProps) => {
+}: EditTransactionFormProps) => {
   return (
     <form onSubmit={onSubmit}>
       <input
@@ -22,12 +18,14 @@ const TransactionForm = ({
         name="item"
         onChange={onChange}
         placeholder="항목명"
+        value={form.item}
         className="w-full border rounded p-2 mb-3"
       />
       <input
         type="number"
         name="amount"
         placeholder="금액"
+        value={form.amount}
         onChange={onChange}
         className="w-full border rounded p-2 mb-3"
       />
@@ -43,6 +41,7 @@ const TransactionForm = ({
       <div className="flex justify-end gap-2">
         <button
           onClick={cancel}
+          type="button"
           className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 cursor-pointer"
         >
           취소
@@ -51,11 +50,11 @@ const TransactionForm = ({
           type="submit"
           className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 cursor-pointer"
         >
-          등록
+          완료
         </button>
       </div>
     </form>
   );
 };
 
-export default TransactionForm;
+export default EditTransactionForm;
