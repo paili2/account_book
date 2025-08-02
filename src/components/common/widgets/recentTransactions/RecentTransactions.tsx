@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import TransactionAmount from "./TransactionAmount";
-import { User } from "../../DashboardPage";
+import { User } from "../../../dashboard/DashboardPage";
 
 const RecentTransactions = () => {
   const [transactions, settTransactions] = useState<any[]>([]);

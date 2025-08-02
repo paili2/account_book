@@ -1,4 +1,4 @@
-import PageTitle from "../../../common/PageTitle";
+import PageTitle from "../../PageTitle";
 import LogoutButton from "./LogoutButton";
 
 interface DashboardHeader {

@@ -1,4 +1,4 @@
-import { User } from "../DashboardPage";
+import { User } from "../../dashboard/DashboardPage";
 
 interface UserGreetingProps {
   user: User;

@@ -2,11 +2,11 @@
 
 import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
-import Header from "./widgets/header/Header";
-import UserGreeting from "./widgets/UserGreeting";
-import TransactionActions from "./widgets/transactionActions/TransactionActions";
-import RecentTransactions from "./widgets/recentTransactions/RecentTransactions";
-import AddTransactionModal from "./widgets/addTransactionModal/AddTransactionModal";
+import Header from "../common/widgets/header/Header";
+import UserGreeting from "../common/widgets/UserGreeting";
+import TransactionActions from "../common/widgets/transactionActions/TransactionActions";
+import RecentTransactions from "../common/widgets/recentTransactions/RecentTransactions";
+import AddTransactionModal from "../common/widgets/addTransactionModal/AddTransactionModal";
 import HandleInputChange from "@/src/lib/utils/HandleInputChange";
 import ToggleModal from "@/src/lib/utils/ToggleModal";
 
@@ -35,9 +35,8 @@ const DashboardPage = () => {
     router.push("/login");
   };
 
-  const key = `transactions_${user.email}`;
-
   const handleSubmitTransaction = (e: FormEvent<HTMLFormElement>) => {
+    const key = `transactions_${user.email}`;
     const transactions = JSON.parse(localStorage.getItem(key) || "[]");
     transactions.push({ ...form, date: new Date().toLocaleDateString() });
     localStorage.setItem(key, JSON.stringify(transactions));
