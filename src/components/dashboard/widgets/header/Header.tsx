@@ -8,7 +8,7 @@ interface DashboardHeader {
 const Header = ({ onClick }: DashboardHeader) => {
   return (
     <header className="w-full max-w-2xl flex justify-between items-center mb-6">
-      <PageTitle title="Account Book 대시보드"></PageTitle>
+      <PageTitle title="대시보드"></PageTitle>
       <LogoutButton onClick={onClick}></LogoutButton>
     </header>
   );
