@@ -1,7 +1,7 @@
-const ToggleModal = (
+const toggleModal = (
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   setIsModalOpen((prev) => !prev);
 };
 
-export default ToggleModal;
+export default toggleModal;

@@ -8,7 +8,7 @@ import TransactionActions from "../common/widgets/transactionActions/Transaction
 import RecentTransactions from "../common/widgets/recentTransactions/RecentTransactions";
 import AddTransactionModal from "../common/modals/addTransaction/AddTransactionModal";
 import HandleInputChange from "@/src/lib/utils/HandleInputChange";
-import ToggleModal from "@/src/lib/utils/ToggleModal";
+import toggleModal from "@/src/lib/utils/toggleModal";
 
 export interface User {
   nickName?: string;
@@ -59,7 +59,7 @@ const DashboardPage = () => {
       <Header onClick={logout}></Header>
       <UserGreeting user={user}></UserGreeting>
       <TransactionActions
-        addTransaction={() => ToggleModal(setIsModalOpen)}
+        addTransaction={() => toggleModal(setIsModalOpen)}
       ></TransactionActions>
       <RecentTransactions></RecentTransactions>
       {isModalOpen && (
@@ -67,7 +67,7 @@ const DashboardPage = () => {
           onSubmit={handleSubmitTransaction}
           onChange={(e) => HandleInputChange(e, setForm)}
           form={form}
-          cancel={() => ToggleModal(setIsModalOpen)}
+          cancel={() => toggleModal(setIsModalOpen)}
         ></AddTransactionModal>
       )}
     </main>

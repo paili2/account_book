@@ -1,6 +1,6 @@
 import { User } from "@/src/components/dashboard/DashboardPage";
 import { Transaction } from "@/src/components/transactions/TransactionsPage";
-import ToggleModal from "./ToggleModal";
+import toggleModal from "./toggleModal";
 
 export const HandleAddSubmitTransaction = (
   e: React.FormEvent,
@@ -35,5 +35,5 @@ export const HandleAddSubmitTransaction = (
   localStorage.setItem(key, JSON.stringify(updated));
   setTransactions([...updated].reverse());
 
-  ToggleModal(setIsAddModalOpen);
+  toggleModal(setIsAddModalOpen);
 };

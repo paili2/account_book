@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import TableHeader from "./widgets/TableHeader";
 import Header from "./widgets/Header";
-import ToggleModal from "@/src/lib/utils/ToggleModal";
+
 import { User } from "../dashboard/DashboardPage";
 import { useRouter } from "next/navigation";
 import {
@@ -11,6 +11,7 @@ import {
   handleIndividualCheck,
 } from "@/src/lib/utils/handleCheck";
 import { getModals } from "@/src/lib/utils/modalConfig";
+import toggleModal from "@/src/lib/utils/toggleModal";
 
 export interface Transaction {
   id: string;
@@ -54,7 +55,7 @@ const TransactionsPage = () => {
     setTransactions(updated);
     localStorage.setItem(storageKey, JSON.stringify(updated));
     resetSelection(updated.length);
-    ToggleModal(setIsDeleteModalOpen);
+    toggleModal(setIsDeleteModalOpen);
   };
 
   const [deleteMessage, setDeleteMessage] = useState<string>("");
@@ -155,10 +156,10 @@ const TransactionsPage = () => {
     setEditCheckCount(selectedCount);
 
     if (selectedCount !== 1) {
-      ToggleModal(setIsSelectionWarningModalOpen);
+      toggleModal(setIsSelectionWarningModalOpen);
     } else {
       setForm(transactions[isChecked.findIndex(Boolean)]);
-      ToggleModal(setIsEditModalOpen);
+      toggleModal(setIsEditModalOpen);
     }
   };
 
@@ -183,7 +184,7 @@ const TransactionsPage = () => {
   return (
     <main className="min-h-screen bg-gray-50 flex flex-col items-center p-6">
       <Header
-        addClick={() => ToggleModal(setIsAddModalOpen)}
+        addClick={() => toggleModal(setIsAddModalOpen)}
         editClick={validateSingleSelection}
         deleteClick={validateDeleteSelection}
       />

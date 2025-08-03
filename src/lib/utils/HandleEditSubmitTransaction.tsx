@@ -1,6 +1,6 @@
 import { User } from "@/src/components/dashboard/DashboardPage";
 import { Transaction } from "@/src/components/transactions/TransactionsPage";
-import ToggleModal from "./ToggleModal";
+import toggleModal from "./toggleModal";
 
 export const HandleEditSubmitTransaction = (
   e: React.FormEvent,
@@ -22,7 +22,7 @@ export const HandleEditSubmitTransaction = (
 
   localStorage.setItem(key, JSON.stringify(updated));
   setTransactions(updated);
-  ToggleModal(setIsEditModalOpen);
+  toggleModal(setIsEditModalOpen);
   setisAllChecked(false);
   setIsChecked(new Array(transactions.length).fill(false));
 };

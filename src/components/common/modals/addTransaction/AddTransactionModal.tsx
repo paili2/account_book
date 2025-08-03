@@ -3,9 +3,9 @@ import AddTransactionForm, { TransactionFormProps } from "./AddTransactionForm";
 
 interface AddTransactionModalProps extends TransactionFormProps {
   cancel: () => void;
-  setIsAllChecked: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsChecked: React.Dispatch<React.SetStateAction<boolean[]>>;
-  transactions: Transaction[];
+  // setIsAllChecked: React.Dispatch<React.SetStateAction<boolean>>;
+  // setIsChecked: React.Dispatch<React.SetStateAction<boolean[]>>;
+  // transactions: Transaction[];
 }
 
 const AddTransactionModal = ({

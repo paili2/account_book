@@ -1,5 +1,5 @@
 import { Transaction } from "@/src/components/transactions/TransactionsPage";
-import ToggleModal from "./ToggleModal";
+import toggleModal from "./toggleModal";
 
 export const toggleModalAndResetSelection = (
   modalOpenType: React.Dispatch<React.SetStateAction<boolean>>,
@@ -7,7 +7,7 @@ export const toggleModalAndResetSelection = (
   setIsChecked: React.Dispatch<React.SetStateAction<boolean[]>>,
   transactions: Transaction[]
 ) => {
-  ToggleModal(modalOpenType);
+  toggleModal(modalOpenType);
   setIsAllChecked(false);
   setIsChecked(new Array(transactions.length).fill(false));
 };
