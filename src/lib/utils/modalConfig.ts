@@ -13,14 +13,25 @@ import { ComponentType } from "react";
 
 interface BaseModalProps {
   cancel?: () => void;
-  [key: string]: unknown;
+  onSubmit?: (e: React.FormEvent) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  form?: Transaction;
+  setIsAllChecked?: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsChecked?: React.Dispatch<React.SetStateAction<boolean[]>>;
+  transactions?: Transaction[];
+  title?: string;
+  transaction?: Transaction;
+  deleteMessage?: string;
+  deleteClick?: () => void;
+  message?: string;
+  confirm?: () => void;
 }
 
-export interface ModalConfig {
+export interface ModalConfig<T extends BaseModalProps = BaseModalProps> {
   key: string;
   condition: boolean;
-  Component: ComponentType<any>;
-  props: Record<string, unknown>;
+  Component: ComponentType<T>;
+  props: T;
 }
 
 interface GetModalsProps {
@@ -71,7 +82,7 @@ export const getModals = ({
   {
     key: "addTransaction",
     condition: isAddModalOpen,
-    Component: AddTransactionModal as ComponentType<any>,
+    Component: AddTransactionModal as ComponentType<BaseModalProps>,
     props: {
       setIsAllChecked,
       setIsChecked,
@@ -93,7 +104,7 @@ export const getModals = ({
   {
     key: "editTransaction",
     condition: isEditModalOpen && !!transaction,
-    Component: EditTransactionModal as ComponentType<any>,
+    Component: EditTransactionModal as ComponentType<BaseModalProps>,
     props: {
       title: "내역 수정",
       onSubmit: (e: React.FormEvent) =>
@@ -117,7 +128,7 @@ export const getModals = ({
   {
     key: "selectionWarning",
     condition: isSelectionWarningModalOpen,
-    Component: SingleSelectionAlertModal as ComponentType<any>,
+    Component: SingleSelectionAlertModal as ComponentType<BaseModalProps>,
     props: {
       message:
         editCheckCount > 1
@@ -135,7 +146,7 @@ export const getModals = ({
   {
     key: "deleteTransaction",
     condition: isDeleteModalOpen,
-    Component: DeleteTransactionModal as ComponentType<any>,
+    Component: DeleteTransactionModal as ComponentType<BaseModalProps>,
     props: {
       deleteMessage,
       deleteClick: handleDeleteSubmitTransaction,
