@@ -144,7 +144,7 @@ const TransactionsPage = () => {
 
       const key = `transactions_${storedUser.email}`;
       const savedTransactions = JSON.parse(localStorage.getItem(key) || "[]");
-      setTransactions(savedTransactions.reverse());
+      setTransactions(savedTransactions);
       resetSelection(savedTransactions.length);
     };
 
@@ -221,36 +221,39 @@ const TransactionsPage = () => {
             checked={isAllChecked}
           />
           {transactions.length > 0 ? (
-            transactions.map((v, i) => {
-              const isIncome = v.type === "income";
-              return (
-                <div
-                  key={v.id || i} // ✅ 유니크 보장
-                  className="grid grid-cols-[1fr_2fr_3fr_2fr_2fr] border-b border-gray-100 last:border-none py-3 text-gray-700 text-center p-6"
-                >
-                  <input
-                    type="checkbox"
-                    className="mx-auto cursor-pointer"
-                    checked={isChecked[i] ?? false}
-                    onChange={() =>
-                      handleIndividualCheck(i, setIsAllChecked, setIsChecked)
-                    }
-                  />
-                  <span>{v.item}</span>
-                  <span>{`${isIncome ? "+" : "-"}${Number(
-                    v.amount
-                  ).toLocaleString()}원`}</span>
-                  <span
-                    className={`font-medium ${
-                      isIncome ? "text-blue-500" : "text-red-500"
-                    }`}
+            transactions
+              .slice()
+              .reverse()
+              .map((v, i) => {
+                const isIncome = v.type === "income";
+                return (
+                  <div
+                    key={v.id || i} // ✅ 유니크 보장
+                    className="grid grid-cols-[1fr_2fr_3fr_2fr_2fr] border-b border-gray-100 last:border-none py-3 text-gray-700 text-center p-6"
                   >
-                    {isIncome ? "수입" : "지출"}
-                  </span>
-                  <span>{new Date(v.date).toLocaleDateString()}</span>
-                </div>
-              );
-            })
+                    <input
+                      type="checkbox"
+                      className="mx-auto cursor-pointer"
+                      checked={isChecked[i] ?? false}
+                      onChange={() =>
+                        handleIndividualCheck(i, setIsAllChecked, setIsChecked)
+                      }
+                    />
+                    <span>{v.item}</span>
+                    <span>{`${isIncome ? "+" : "-"}${Number(
+                      v.amount
+                    ).toLocaleString()}원`}</span>
+                    <span
+                      className={`font-medium ${
+                        isIncome ? "text-blue-500" : "text-red-500"
+                      }`}
+                    >
+                      {isIncome ? "수입" : "지출"}
+                    </span>
+                    <span>{new Date(v.date).toLocaleDateString()}</span>
+                  </div>
+                );
+              })
           ) : (
             <div className="text-center text-gray-500 py-4">
               내역이 없습니다.

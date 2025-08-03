@@ -12,7 +12,7 @@ const RecentTransactions = () => {
     const key = `transactions_${user.email}`;
     setUser(user);
     const transactions = JSON.parse(localStorage.getItem(key) || "[]");
-    settTransactions(transactions.reverse());
+    settTransactions(transactions);
   }, []);
 
   return (
@@ -21,14 +21,17 @@ const RecentTransactions = () => {
         최근 거래 내역
       </h3>
       <ul className="space-y-3">
-        {transactions.slice(0, 7).map((v, i) => (
-          <TransactionAmount
-            item={v.item}
-            amount={Number(v.amount).toLocaleString()}
-            type={v.type}
-            key={i}
-          ></TransactionAmount>
-        ))}
+        {transactions
+          .slice(-7)
+          .reverse()
+          .map((v, i) => (
+            <TransactionAmount
+              item={v.item}
+              amount={Number(v.amount).toLocaleString()}
+              type={v.type}
+              key={i}
+            ></TransactionAmount>
+          ))}
       </ul>
     </section>
   );
