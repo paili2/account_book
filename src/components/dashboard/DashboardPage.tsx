@@ -13,6 +13,7 @@ import toggleModal from "@/src/lib/utils/toggleModal";
 export interface User {
   nickName?: string;
   email?: string;
+  password?: string;
 }
 
 const DashboardPage = () => {

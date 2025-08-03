@@ -28,8 +28,9 @@ export const HandleAddSubmitTransaction = (
 
   const newTransaction = {
     ...form,
-    id: crypto.randomUUID(), // ✅ 유니크 id 생성
+    id: `${Date.now()}-${Math.random().toString(36).substring(2, 9)}`, // ✅ 고유 ID
   };
+
   const updated = [...stored, newTransaction];
 
   localStorage.setItem(key, JSON.stringify(updated));

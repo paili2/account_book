@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import TransactionAmount from "./TransactionAmount";
 import { User } from "../../../dashboard/DashboardPage";
+import { Transaction } from "@/src/components/transactions/TransactionsPage";
 
 const RecentTransactions = () => {
-  const [transactions, settTransactions] = useState<any[]>([]);
+  const [transactions, settTransactions] = useState<Transaction[]>([]);
   const [user, setUser] = useState<User>();
 
   useEffect(() => {

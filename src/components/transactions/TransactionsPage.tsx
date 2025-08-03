@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useState } from "react";
 import TableHeader from "./widgets/TableHeader";
 import Header from "./widgets/Header";
-
 import { User } from "../dashboard/DashboardPage";
 import { useRouter } from "next/navigation";
 import {
@@ -13,7 +12,7 @@ import {
 import { getModals } from "@/src/lib/utils/modalConfig";
 import toggleModal from "@/src/lib/utils/toggleModal";
 
-export interface Transaction {
+export interface Transaction extends Record<string, unknown> {
   id: string;
   item: string;
   amount: string;
@@ -40,6 +39,7 @@ const TransactionsPage = () => {
   const [isAllChecked, setIsAllChecked] = useState(false);
   const [isChecked, setIsChecked] = useState<boolean[]>([]);
   const [editCheckCount, setEditCheckCount] = useState(0);
+  const [deleteMessage, setDeleteMessage] = useState<string>("");
 
   const router = useRouter();
 
@@ -57,8 +57,6 @@ const TransactionsPage = () => {
     resetSelection(updated.length);
     toggleModal(setIsDeleteModalOpen);
   };
-
-  const [deleteMessage, setDeleteMessage] = useState<string>("");
 
   const validateDeleteSelection = () => {
     const selectedCount = isChecked.filter(Boolean).length;
@@ -92,44 +90,46 @@ const TransactionsPage = () => {
     setter: React.Dispatch<React.SetStateAction<boolean>>
   ) => {
     setter(false);
-    resetSelection(transactions.length); // ✅ 현재 남은 항목 개수 기준 초기화
+    resetSelection(transactions.length);
   };
 
-  const modals = useMemo(() => {
-    return getModals({
+  const modals = useMemo(
+    () =>
+      getModals({
+        isAddModalOpen,
+        isEditModalOpen,
+        isSelectionWarningModalOpen,
+        isDeleteModalOpen,
+        editCheckCount,
+        transaction: transactions.find((_, i) => isChecked[i]),
+        setIsAllChecked,
+        setIsChecked,
+        transactions,
+        user,
+        form,
+        setForm,
+        setTransactions,
+        setIsAddModalOpen,
+        setIsEditModalOpen,
+        setIsDeleteModalOpen,
+        setIsSelectionWarningModalOpen,
+        handleDeleteSubmitTransaction,
+        cancelModal,
+        deleteMessage,
+      }),
+    [
       isAddModalOpen,
       isEditModalOpen,
       isSelectionWarningModalOpen,
       isDeleteModalOpen,
       editCheckCount,
-      transaction: transactions.find((_, i) => isChecked[i]),
-      setIsAllChecked,
-      setIsChecked,
       transactions,
+      isChecked,
       user,
       form,
-      setIsSelectionWarningModalOpen,
-      setTransactions,
-      setIsAddModalOpen,
-      setIsEditModalOpen,
-      setIsDeleteModalOpen,
-      handleDeleteSubmitTransaction,
-      cancelModal,
       deleteMessage,
-      setForm,
-    });
-  }, [
-    isAddModalOpen,
-    isEditModalOpen,
-    isSelectionWarningModalOpen,
-    isDeleteModalOpen,
-    editCheckCount,
-    transactions,
-    isChecked,
-    user,
-    form,
-    deleteMessage, // ✅ 의존성 추가
-  ]);
+    ]
+  );
 
   useEffect(() => {
     const loadTransactions = () => {
@@ -225,7 +225,7 @@ const TransactionsPage = () => {
               const isIncome = v.type === "income";
               return (
                 <div
-                  key={v.id}
+                  key={v.id || i} // ✅ 유니크 보장
                   className="grid grid-cols-[1fr_2fr_3fr_2fr_2fr] border-b border-gray-100 last:border-none py-3 text-gray-700 text-center p-6"
                 >
                   <input
@@ -252,15 +252,15 @@ const TransactionsPage = () => {
               );
             })
           ) : (
-            <span className="block text-center py-6">
-              등록된 내용이 없습니다
-            </span>
+            <div className="text-center text-gray-500 py-4">
+              내역이 없습니다.
+            </div>
           )}
         </section>
       </div>
 
-      {modals.map(({ condition, Component, props }, idx) =>
-        condition ? <Component key={idx} {...props} /> : null
+      {modals.map(({ key, condition, Component, props }) =>
+        condition ? <Component key={key} {...props} /> : null
       )}
     </main>
   );

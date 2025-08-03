@@ -1,5 +1,6 @@
 "use client";
 
+import { User } from "@/src/components/dashboard/DashboardPage";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, useState } from "react";
 
@@ -16,7 +17,7 @@ export default function SignUpPage() {
     e.preventDefault();
     try {
       const users = JSON.parse(localStorage.getItem("users") || "[]");
-      const isExist = users.some((user: any) => user.email === form.email);
+      const isExist = users.some((user: User) => user.email === form.email);
       if (!isExist) {
         users.push(form);
         localStorage.setItem("users", JSON.stringify(users));

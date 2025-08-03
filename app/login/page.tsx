@@ -1,5 +1,6 @@
 "use client";
 
+import { User } from "@/src/components/dashboard/DashboardPage";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, useState } from "react";
 
@@ -16,7 +17,7 @@ export default function LoginPage() {
     try {
       const users = JSON.parse(localStorage.getItem("users") || "[]");
       const isMatch = users.find(
-        (user: any) =>
+        (user: User) =>
           user.email === form.email && user.password === form.password
       );
       if (isMatch) {

@@ -1,3 +1,5 @@
+"use client";
+
 import AddTransactionModal from "@/src/components/common/modals/addTransaction/AddTransactionModal";
 import DeleteTransactionModal from "@/src/components/common/modals/deleteTransaction/DeleteTransactionModal";
 import EditTransactionModal from "@/src/components/common/modals/editTransaction/EditTransactionModal";
@@ -5,12 +7,43 @@ import SingleSelectionAlertModal from "@/src/components/common/modals/editTransa
 import { HandleAddSubmitTransaction } from "@/src/lib/utils/HandleAddSubmitTransaction";
 import { HandleEditSubmitTransaction } from "@/src/lib/utils/HandleEditSubmitTransaction";
 import HandleInputChange from "@/src/lib/utils/HandleInputChange";
+import { Transaction } from "@/src/components/transactions/TransactionsPage";
+import { User } from "@/src/components/dashboard/DashboardPage";
 import { ComponentType } from "react";
 
-interface ModalConfig {
+interface BaseModalProps {
+  cancel?: () => void;
+  [key: string]: unknown;
+}
+
+export interface ModalConfig {
+  key: string;
   condition: boolean;
   Component: ComponentType<any>;
-  props: Record<string, any>;
+  props: Record<string, unknown>;
+}
+
+interface GetModalsProps {
+  isAddModalOpen: boolean;
+  isEditModalOpen: boolean;
+  isSelectionWarningModalOpen: boolean;
+  isDeleteModalOpen: boolean;
+  editCheckCount: number;
+  transaction: Transaction | undefined;
+  setIsAllChecked: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsChecked: React.Dispatch<React.SetStateAction<boolean[]>>;
+  transactions: Transaction[];
+  user: User;
+  form: Transaction;
+  setForm: React.Dispatch<React.SetStateAction<Transaction>>;
+  setTransactions: React.Dispatch<React.SetStateAction<Transaction[]>>;
+  setIsAddModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsEditModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsDeleteModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsSelectionWarningModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  handleDeleteSubmitTransaction: () => void;
+  cancelModal: (setter: React.Dispatch<React.SetStateAction<boolean>>) => void;
+  deleteMessage: string;
 }
 
 export const getModals = ({
@@ -34,15 +67,16 @@ export const getModals = ({
   handleDeleteSubmitTransaction,
   cancelModal,
   deleteMessage,
-}: any): ModalConfig[] => [
+}: GetModalsProps): ModalConfig[] => [
   {
+    key: "addTransaction",
     condition: isAddModalOpen,
-    Component: AddTransactionModal,
+    Component: AddTransactionModal as ComponentType<any>,
     props: {
       setIsAllChecked,
       setIsChecked,
       transactions,
-      onSubmit: (e: any) =>
+      onSubmit: (e: React.FormEvent) =>
         HandleAddSubmitTransaction(
           e,
           user,
@@ -50,17 +84,19 @@ export const getModals = ({
           setTransactions,
           setIsAddModalOpen
         ),
-      onChange: (e: any) => HandleInputChange(e, setForm),
+      onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
+        HandleInputChange<Transaction>(e, setForm),
       form,
       cancel: () => cancelModal(setIsAddModalOpen),
     },
   },
   {
-    condition: isEditModalOpen && transaction,
-    Component: EditTransactionModal,
+    key: "editTransaction",
+    condition: isEditModalOpen && !!transaction,
+    Component: EditTransactionModal as ComponentType<any>,
     props: {
       title: "내역 수정",
-      onSubmit: (e: any) =>
+      onSubmit: (e: React.FormEvent) =>
         HandleEditSubmitTransaction(
           e,
           user,
@@ -71,15 +107,17 @@ export const getModals = ({
           setIsAllChecked,
           setIsChecked
         ),
-      onChange: (e: any) => HandleInputChange(e, setForm),
+      onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
+        HandleInputChange<Transaction>(e, setForm),
       form,
       transaction,
       cancel: () => cancelModal(setIsEditModalOpen),
     },
   },
   {
+    key: "selectionWarning",
     condition: isSelectionWarningModalOpen,
-    Component: SingleSelectionAlertModal,
+    Component: SingleSelectionAlertModal as ComponentType<any>,
     props: {
       message:
         editCheckCount > 1
@@ -95,10 +133,11 @@ export const getModals = ({
     },
   },
   {
+    key: "deleteTransaction",
     condition: isDeleteModalOpen,
-    Component: DeleteTransactionModal,
+    Component: DeleteTransactionModal as ComponentType<any>,
     props: {
-      deleteMessage, // ✅ 메시지 전달
+      deleteMessage,
       deleteClick: handleDeleteSubmitTransaction,
       cancel: () => cancelModal(setIsDeleteModalOpen),
     },
