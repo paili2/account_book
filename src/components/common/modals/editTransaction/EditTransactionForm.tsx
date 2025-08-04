@@ -1,5 +1,6 @@
 import { Transaction } from "@/src/components/transactions/TransactionsPage";
 import { TransactionFormProps } from "../addTransaction/AddTransactionForm";
+import Button from "../../ui/Button";
 
 export interface EditTransactionFormProps extends TransactionFormProps {
   transaction: Transaction;
@@ -39,19 +40,8 @@ const EditTransactionForm = ({
         <option value="expense">지출</option>
       </select>
       <div className="flex justify-end gap-2">
-        <button
-          onClick={cancel}
-          type="button"
-          className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 cursor-pointer"
-        >
-          취소
-        </button>
-        <button
-          type="submit"
-          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 cursor-pointer"
-        >
-          완료
-        </button>
+        <Button onClick={cancel} text="취소"></Button>
+        <Button type="submit" text="완료"></Button>
       </div>
     </form>
   );

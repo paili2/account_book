@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import TransactionAmount from "./TransactionAmount";
 import { User } from "../../../dashboard/DashboardPage";
 import { Transaction } from "@/src/components/transactions/TransactionsPage";
+import Title from "../../ui/Title";
 
 const RecentTransactions = () => {
   const [transactions, settTransactions] = useState<Transaction[]>([]);
@@ -17,9 +18,9 @@ const RecentTransactions = () => {
 
   return (
     <section className="w-full max-w-2xl bg-white rounded-xl shadow-md p-6 mt-6">
-      <h3 className="text-lg font-semibold text-gray-800 mb-4">
+      <Title variant="h3" className="mb-4">
         최근 거래 내역
-      </h3>
+      </Title>
       <ul className="space-y-3">
         {transactions
           .slice(-7)

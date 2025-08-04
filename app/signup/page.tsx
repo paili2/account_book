@@ -1,5 +1,6 @@
 "use client";
 
+import Logo from "@/src/components/common/ui/Logo";
 import { User } from "@/src/components/dashboard/DashboardPage";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, useState } from "react";
@@ -31,9 +32,7 @@ export default function SignUpPage() {
   return (
     <main className="min-h-screen flex items-center justify-center bg-gradient-to-b from-blue-50 to-white">
       <div className="w-full max-w-md bg-white p-8 rounded-xl shadow-lg border border-gray-200">
-        <h1 className="text-3xl font-bold text-center mb-6 text-blue-600 tracking-tight">
-          Account Book
-        </h1>
+        <Logo></Logo>
         <p className="text-center text-gray-500 text-sm mb-6">
           간단한 정보만 입력하고 가계부를 시작하세요 📝
         </p>

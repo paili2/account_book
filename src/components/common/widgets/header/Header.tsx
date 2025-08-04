@@ -1,4 +1,4 @@
-import PageTitle from "../../PageTitle";
+import Title from "../../ui/Title";
 import LogoutButton from "./LogoutButton";
 
 interface DashboardHeader {
@@ -8,7 +8,7 @@ interface DashboardHeader {
 const Header = ({ onClick }: DashboardHeader) => {
   return (
     <header className="w-full max-w-2xl flex justify-between items-center mb-6">
-      <PageTitle title="대시보드"></PageTitle>
+      <Title>대시보드</Title>
       <LogoutButton onClick={onClick}></LogoutButton>
     </header>
   );

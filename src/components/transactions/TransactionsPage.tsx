@@ -11,6 +11,8 @@ import {
 } from "@/src/lib/utils/handleCheck";
 import { getModals } from "@/src/lib/utils/modalConfig";
 import toggleModal from "@/src/lib/utils/toggleModal";
+import TransactionSummary from "./widgets/TransactionSummary";
+import TransactionItem from "./widgets/TransactionItem";
 
 export interface Transaction extends Record<string, unknown> {
   id: string;
@@ -189,30 +191,11 @@ const TransactionsPage = () => {
         deleteClick={validateDeleteSelection}
       />
       <div className="w-full max-w-4xl flex flex-col gap-[20px]">
-        <section className="w-full max-w-4xl bg-white rounded-lg shadow mb-4 p-4 grid grid-cols-3 text-center text-gray-700">
-          <div>
-            <p className="font-semibold">총 수입</p>
-            <p className="text-blue-500 font-bold">
-              {totalIncome.toLocaleString()}원
-            </p>
-          </div>
-          <div>
-            <p className="font-semibold">총 지출</p>
-            <p className="text-red-500 font-bold">
-              {totalExpense.toLocaleString()}원
-            </p>
-          </div>
-          <div>
-            <p className="font-semibold">잔액</p>
-            <p
-              className={`font-bold ${
-                balance >= 0 ? "text-green-600" : "text-red-600"
-              }`}
-            >
-              {balance.toLocaleString()}원
-            </p>
-          </div>
-        </section>
+        <TransactionSummary
+          totalIncome={totalIncome}
+          totalExpense={totalExpense}
+          balance={balance}
+        ></TransactionSummary>
         <section className="w-full max-w-4xl bg-white rounded-lg shadow">
           <TableHeader
             onChange={(e) =>
@@ -227,31 +210,17 @@ const TransactionsPage = () => {
               .map((v, i) => {
                 const isIncome = v.type === "income";
                 return (
-                  <div
-                    key={v.id || i} // ✅ 유니크 보장
-                    className="grid grid-cols-[1fr_2fr_3fr_2fr_2fr] border-b border-gray-100 last:border-none py-3 text-gray-700 text-center p-6"
-                  >
-                    <input
-                      type="checkbox"
-                      className="mx-auto cursor-pointer"
-                      checked={isChecked[i] ?? false}
-                      onChange={() =>
-                        handleIndividualCheck(i, setIsAllChecked, setIsChecked)
-                      }
-                    />
-                    <span>{v.item}</span>
-                    <span>{`${isIncome ? "+" : "-"}${Number(
-                      v.amount
-                    ).toLocaleString()}원`}</span>
-                    <span
-                      className={`font-medium ${
-                        isIncome ? "text-blue-500" : "text-red-500"
-                      }`}
-                    >
-                      {isIncome ? "수입" : "지출"}
-                    </span>
-                    <span>{new Date(v.date).toLocaleDateString()}</span>
-                  </div>
+                  <TransactionItem
+                    key={v.id || i}
+                    checked={isChecked[i] ?? false}
+                    onChange={() =>
+                      handleIndividualCheck(i, setIsAllChecked, setIsChecked)
+                    }
+                    item={v.item}
+                    amount={v.amount}
+                    isIncome={isIncome}
+                    date={v.date}
+                  ></TransactionItem>
                 );
               })
           ) : (

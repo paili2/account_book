@@ -1,6 +1,7 @@
 "use client";
 
 import { X } from "lucide-react";
+import Button from "../../ui/Button";
 
 interface DeleteTransactionModalProps {
   deleteMessage: string; // ✅ 메시지 prop 추가
@@ -30,18 +31,8 @@ const DeleteTransactionModal = ({
             {deleteMessage || "해당 항목을 삭제하시겠습니까?"}
           </h2>
           <div className="flex justify-center gap-4">
-            <button
-              onClick={cancel}
-              className="px-5 py-2.5 rounded-lg bg-gray-200 text-gray-700 font-medium hover:bg-gray-300 transition-all cursor-pointer"
-            >
-              취소
-            </button>
-            <button
-              onClick={deleteClick}
-              className="px-5 py-2.5 rounded-lg bg-red-500 text-white font-medium shadow-sm hover:bg-red-600 transition-all cursor-pointer"
-            >
-              삭제
-            </button>
+            <Button onClick={cancel} text="취소"></Button>
+            <Button onClick={deleteClick} text="삭제"></Button>
           </div>
         </div>
       </div>

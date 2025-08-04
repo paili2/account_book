@@ -1,15 +1,18 @@
+import Button from "../../ui/Button";
+
 interface LogoutButtonProps {
   onClick: () => void;
 }
 
 const LogoutButton = ({ onClick }: LogoutButtonProps) => {
   return (
-    <button
-      onClick={onClick}
-      className="bg-gray-300 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition cursor-pointer"
-    >
-      로그아웃
-    </button>
+    <>
+      <Button
+        onClick={onClick}
+        text="로그아웃"
+        className="bg-gray-300 text-white hover:bg-gray-500 transition"
+      ></Button>
+    </>
   );
 };
 

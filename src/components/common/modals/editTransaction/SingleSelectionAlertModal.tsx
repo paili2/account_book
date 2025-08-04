@@ -1,5 +1,7 @@
 "use client";
 
+import Button from "../../ui/Button";
+
 interface SingleSelectionAlertModalProps {
   confirm: () => void;
   message: string;
@@ -20,12 +22,7 @@ const SingleSelectionAlertModal = ({
             {message}
           </h2>
           <div className="flex justify-center">
-            <button
-              onClick={confirm}
-              className="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition cursor-pointer"
-            >
-              확인
-            </button>
+            <Button onClick={confirm} text="확인"></Button>
           </div>
         </div>
       </div>
