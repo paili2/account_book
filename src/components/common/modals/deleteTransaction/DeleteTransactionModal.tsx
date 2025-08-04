@@ -26,7 +26,6 @@ const DeleteTransactionModal = ({
           </button>
         </div>
         <div className="px-8 py-6">
-          {/* ✅ 여기서 deleteMessage 사용 */}
           <h2 className="text-lg font-medium mb-5 text-center text-gray-800">
             {deleteMessage || "해당 항목을 삭제하시겠습니까?"}
           </h2>

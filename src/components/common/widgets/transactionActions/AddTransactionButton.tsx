@@ -6,13 +6,7 @@ export interface AddTransactionButtonProps {
 
 const AddTransactionButton = ({ onClick }: AddTransactionButtonProps) => {
   return (
-    <>
-      <Button
-        onClick={onClick}
-        text="거래 추가"
-        className="flex-1 py-3"
-      ></Button>
-    </>
+    <Button onClick={onClick} text="거래 추가" className="flex-1 py-3"></Button>
   );
 };
 

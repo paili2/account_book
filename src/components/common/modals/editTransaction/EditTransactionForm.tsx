@@ -1,6 +1,7 @@
 import { Transaction } from "@/src/components/transactions/TransactionsPage";
 import { TransactionFormProps } from "../addTransaction/AddTransactionForm";
 import Button from "../../ui/Button";
+import { inputFields } from "../InputField";
 
 export interface EditTransactionFormProps extends TransactionFormProps {
   transaction: Transaction;
@@ -14,22 +15,17 @@ const EditTransactionForm = ({
 }: EditTransactionFormProps) => {
   return (
     <form onSubmit={onSubmit}>
-      <input
-        type="text"
-        name="item"
-        onChange={onChange}
-        placeholder="항목명"
-        value={form.item}
-        className="w-full border rounded p-2 mb-3"
-      />
-      <input
-        type="number"
-        name="amount"
-        placeholder="금액"
-        value={form.amount}
-        onChange={onChange}
-        className="w-full border rounded p-2 mb-3"
-      />
+      {inputFields.map((v, i) => (
+        <input
+          key={i}
+          type={v.type}
+          name={v.name}
+          onChange={onChange}
+          placeholder={v.placeholder}
+          className="w-full border rounded p-2 mb-3"
+        />
+      ))}
+
       <select
         name="type"
         value={form.type}
